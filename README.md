@@ -6,9 +6,9 @@
 
 ## Contents
 
-- [APC 注入](./apc-injection/)
-- [Callback 函数执行](./callback-injection/)
-- [CreateThread/RemoteThread 注入](./create-thread-injection/)
+- [APC Injection (Early Bird in user mode)](./apc-injection/)
+- [Callback Function](./callback-injection/)
+- [CreateThread/RemoteThread Injection](./create-thread-injection/)
 - [Hells Halos Tartarus Gate](./syscall/src/gate.rs)
 - [Layered Syscall](./layered-syscall/)
 - ...
