@@ -21,6 +21,6 @@ windows 下 cargo build 即可。主目录下的 `test.bin` 是一个测试 shel
 
 ## Acknowledgements
 
-- [RustRedOps](https://github.com/joaoviictorti/RustRedOps): a repository for advanced Red Team techniques and offensive malware, focused on Rust
-- [Rustic64](https://github.com/safedv/Rustic64): 64-bit, position-independent implant template for Windows in Rust
-- [ntapi](https://github.com/MSxDOS/ntapi): Rust FFI bindings for Native API
+- [joaoviictorti/RustRedOps](https://github.com/joaoviictorti/RustRedOps): a repository for advanced Red Team techniques and offensive malware, focused on Rust
+- [safedv/Rustic64](https://github.com/safedv/Rustic64): 64-bit, position-independent implant template for Windows in Rust
+- [MSxDOS/ntapi](https://github.com/MSxDOS/ntapi): Rust FFI bindings for Native API
