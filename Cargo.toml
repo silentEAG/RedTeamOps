@@ -1,0 +1,22 @@
+
+[workspace]
+members = [ 
+    "apc-injection", 
+    "callback-injection", 
+    "create-thread-injection", 
+    "shared",
+    "ntapi"
+, "syscall", "layered-syscall"]
+
+
+[workspace.dependencies]
+
+shared = { path = "shared" }
+ntapi = { path = "ntapi" }
+syscall = { path = "syscall" }
+
+windows = "0.59.0"
+windows-sys = "0.59.0"
+hex = "0.4.3"
+anyhow = "1"
+uuid = { version = "1", features = ["v4"] }

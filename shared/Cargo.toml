@@ -1,0 +1,9 @@
+[package]
+name = "shared"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+ntapi = { workspace = true }
+windows-sys = { workspace = true, features = ["Win32_Foundation"] }
