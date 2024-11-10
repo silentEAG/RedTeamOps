@@ -11,7 +11,7 @@ Note that this project is for self-learning and research purposes only!
 - [CreateThread/RemoteThread Injection](./create-thread-injection/)
 - [Hells Halos Tartarus Gate](./syscall/src/gate.rs)
 - [Layered Syscall](./layered-syscall/)
-- [Early Cascade Injection](./early-cascade-injection/)
+- [Early Cascade Injection](./earlycascade-injection/)
 - ...
 
 
