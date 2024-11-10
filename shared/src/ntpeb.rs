@@ -1,6 +1,7 @@
 use core::arch::asm;
 use core::ptr::null_mut;
 
+use ntapi::ntheader::ImageFileHeader;
 use ntapi::ntpebteb::PEB;
 use ntapi::{
     ntheader::{
@@ -88,6 +89,26 @@ pub unsafe fn ldr_module(module_hash: u32) -> *mut LDR_DATA_TABLE_ENTRY {
     null_mut()
 }
 
+pub unsafe fn ldr_module_section_base(module_hash: u32, section_name: &[u8]) -> *mut u8 {
+    let module_base = ldr_module_base_addr(module_hash);
+    let section_table = get_section_table(module_base);
+
+    for section in section_table {
+        let name: &[u8] = &section.name;
+        
+        // fill the name with 0 to 8 bytes
+        let mut filled_section_name = [0u8; 8];
+
+        let len = section_name.len().min(8);
+        filled_section_name[..len].copy_from_slice(&section_name[..len]);
+
+        if name == filled_section_name {
+            return module_base.offset(section.virtual_address as isize);
+        }
+    }
+    null_mut()
+}
+
 /// # Safety
 pub unsafe fn get_nt_headers(base_addr: *mut u8) -> *mut ImageNtHeaders {
     let dos_header = base_addr as *mut ImageDosHeader;
@@ -100,6 +121,31 @@ pub unsafe fn get_nt_headers(base_addr: *mut u8) -> *mut ImageNtHeaders {
     }
     nt_headers
 }
+
+/// # Safety
+pub unsafe fn get_section_table(base_addr: *mut u8) -> &'static [ImageSectionHeader] {
+    let offset = get_section_table_offset(base_addr);
+    let nt_headers = get_nt_headers(base_addr);
+
+    let size = (*nt_headers).file_header.number_of_sections as usize;
+
+    let sections_addr = base_addr.add(offset) as *const ImageSectionHeader;
+    let sections = core::slice::from_raw_parts(sections_addr, size);
+    return sections;
+}
+
+/// # Safety
+pub unsafe fn get_section_table_offset(base_addr: *mut u8) -> usize {
+    let dos_header = base_addr as *mut ImageDosHeader;
+    let e_lfanew = (*dos_header).e_lfanew as usize;
+
+    let nt_header = get_nt_headers(base_addr);
+    let size_of_optional = (*nt_header).file_header.size_of_optional_header as usize;
+
+    let offset = e_lfanew + size_of::<u32>() + size_of::<ImageFileHeader>() + size_of_optional;
+    return offset;
+}
+
 /// # Safety
 pub unsafe fn ldr_function(module_base: *mut u8, function_hash: u32) -> *mut u8 {
     let p_img_nt_headers = get_nt_headers(module_base);
@@ -139,6 +185,21 @@ pub unsafe fn ldr_function(module_base: *mut u8, function_hash: u32) -> *mut u8 
     }
 
     null_mut()
+}
+
+
+#[repr(C)]
+pub struct ImageSectionHeader {
+    pub name: [u8; 8],
+    pub virtual_size: u32,
+    pub virtual_address: u32,
+    pub size_of_raw_data: u32,
+    pub pointer_to_raw_data: u32,
+    pub pointer_to_relocations: u32,
+    pub pointer_to_linenumbers: u32,
+    pub number_of_relocations: u16,
+    pub number_of_linenumbers: u16,
+    pub characteristics: u32,
 }
 
 #[cfg(test)]
@@ -191,6 +252,18 @@ mod tests {
         // unsafe {
         //     winexec("calc\0".as_ptr() as *mut std::ffi::c_void, null_mut());
         // }
+    }
+
+    #[test]
+    fn test_ldr_module_section_base() {
+        let kernel32_hash = dbj2_hash(b"kernel32.dll");
+        let kernel32_base = unsafe { ldr_module_base_addr(kernel32_hash) };
+        assert!(!kernel32_base.is_null());
+
+        let section_base = unsafe { ldr_module_section_base(kernel32_hash, b".text") };
+        assert!(!section_base.is_null());
+
+        // println!("kernel32.dll .text section base address: {:p}", section_base);
     }
 
     #[test]

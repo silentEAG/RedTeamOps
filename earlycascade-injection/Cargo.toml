@@ -1,0 +1,25 @@
+[package]
+name = "earlycascade-injection"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "earlycascade-injection"
+path = "bin/main.rs"
+
+[dependencies]
+shared = { workspace = true }
+syscall = { workspace = true }
+ntapi = { workspace = true }
+
+anyhow = { workspace = true }
+windows-sys = { workspace = true, features = [
+    "Win32_System_SystemInformation", "Win32_System_WindowsProgramming", "Win32_System_Kernel", 
+    "Win32_Foundation", "Win32_System_Threading", "Win32_Security",
+    "Win32_System_Memory", "Win32_System_Rpc", "Win32_Globalization", 
+    "Win32_System_Diagnostics", "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_Diagnostics_Debug", "Win32_Graphics_Gdi",
+    "Win32_System_SystemServices", "Win32_System_Kernel", "Win32_System_ProcessStatus",
+    "Win32_System_LibraryLoader", "Win32_UI_WindowsAndMessaging", "Win32_UI_Shell",
+] }
+widestring = "1.1.0"

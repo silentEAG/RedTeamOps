@@ -6,7 +6,7 @@ members = [
     "create-thread-injection", 
     "shared",
     "ntapi"
-, "syscall", "layered-syscall"]
+, "syscall", "layered-syscall", "earlycascade-injection"]
 
 
 [workspace.dependencies]

@@ -39,6 +39,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "earlycascade-injection"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ntapi",
+ "shared",
+ "syscall",
+ "widestring",
+ "windows-sys",
+]
+
+[[package]]
 name = "layered-syscall"
 version = "0.1.0"
 dependencies = [
