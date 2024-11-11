@@ -27,6 +27,8 @@ Here is a test binary shellcode which will print "Test" to the console and execu
 - [joaoviictorti/RustRedOps](https://github.com/joaoviictorti/RustRedOps): a repository for advanced Red Team techniques and offensive malware, focused on Rust
 - [safedv/Rustic64](https://github.com/safedv/Rustic64): 64-bit, position-independent implant template for Windows in Rust
 - [MSxDOS/ntapi](https://github.com/MSxDOS/ntapi): Rust FFI bindings for Native API
+- Layered Syscall
+  - [WKL-Sec/LayeredSyscall](https://github.com/WKL-Sec/LayeredSyscall)
 - Earlycascade Injection
   - [introducing-early-cascade-injection-from-windows-process-creation-to-stealthy-injection](https://www.outflank.nl/blog/2024/10/15/introducing-early-cascade-injection-from-windows-process-creation-to-stealthy-injection/)
   - [Cracked5pider/earlycascade-injection](https://github.com/Cracked5pider/earlycascade-injection)
